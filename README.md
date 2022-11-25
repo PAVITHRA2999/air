@@ -1,82 +1,70 @@
-# AirCnC (Air Code & Coffe)
+# Getting Started with Create React App
 
-AirCnc is a platform that publishes spots of registered companies. Developers submit a reservation request, so the company accepts or declines the request, all in real time using socket.io
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### Demo
+## Available Scripts
 
-![Demo](demo.png)
+In the project directory, you can run:
 
-![Demo](demo2.gif)
+### `yarn start`
 
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## :rocket: Technologies
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-This project was developed with the following technologies:
+### `yarn test`
 
-## Backend
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-- Nodejs
-- Express
-- CORS
-- Axios
-- websocket
-- Socket.io
-- Mongoose
-- MongoDB Atlas
-- MongoDB Compass
-- Multer
-- VS Code with EditorConfig and ESLint
+### `yarn build`
 
-## Frontend
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-- ReactJS
-- Create React app
-- Axios
-- React Router Dom
-- Socket.io
-- VS Code with EditorConfig and ESLint
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-## Mobile
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-- Expo
-- React Native
-- React Native Async Storage
-- Axios
-- Socket.io
-- React Navigation
-- React gesture-handler
-- React-native-reanimated
-- VS Code with EditorConfig and ESLint
+### `yarn eject`
 
-## :information_source: How To Use
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-```bash
-# Clone this repository
-$ git clone https://github.com/thyagoaraujo/aircnc.git
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-# Go into the repository
-$ cd aircnc
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-# Install dependencies
-$ yarn install
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-# Run the app
-$ cd backend
-$ yarn dev
-$ cd frontend
-$ yarn start
+## Learn More
 
-# Run the app mobile
-$ cd mobile
-$ yarn start
-$ run expo on smartphone
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-```
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-## :memo: License
+### Code Splitting
 
-This project is under the MIT license. See the [LICENSE](https://github.com/thyagoaraujo/aircnc/blob/master/LICENSE.md) for more information.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
----
+### Analyzing the Bundle Size
 
-Made with ♥ by Thyago Araujo :wave: [Get in touch!](https://www.linkedin.com/in/thyagosantosaraujo/)
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `yarn build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
