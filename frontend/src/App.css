@@ -7,7 +7,9 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   min-height: 100%;
 }
 
@@ -17,13 +19,15 @@ body {
   -webkit-font-smoothing: antialiased !important;
 }
 
-body, input button {
+body,
+input,
+button {
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
 
 .container {
-  margin: 80px auto;
+  margin: 80px auto 0;
   max-width: 450px;
   width: 100%;
   display: flex;
@@ -57,6 +61,12 @@ body, input button {
   margin-bottom: 8px;
 }
 
+.content form label span {
+  font-weight: normal;
+  color: #999;
+  font-size: 12px;
+}
+
 .content form input {
   margin-bottom: 20px;
   border: 1px solid #ddd;
@@ -75,16 +85,10 @@ body, input button {
   font-size: 16px;
   font-weight: bold;
   background: #f05a5b;
-  cursor: pointer;
   color: #fff;
+  cursor: pointer;
 }
 
 .content button.btn:hover {
   background: #e14f50;
-}
-
-.content form label span {
-  font-weight: normal;
-  color: #999;
-  font-size: 12px;
 }

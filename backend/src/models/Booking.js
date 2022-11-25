@@ -1,16 +1,16 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 
-const BookingSchema = new Schema({
-    date: String,
-    approved: Boolean,
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    spot: {
-        type: Schema.Types.ObjectId,
-        ref: 'Spot'
-    }
+const BookingSchema = new mongoose.Schema({
+  date: String,
+  approved: Boolean,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  spot: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Spot'
+  }
 });
 
-module.exports = model('Booking', BookingSchema);
+module.exports = mongoose.model('Booking', BookingSchema);
