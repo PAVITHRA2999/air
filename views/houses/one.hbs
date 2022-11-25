@@ -1,0 +1,95 @@
+	{{> nav}}
+		<!-- Images Container -->
+		<div class="container-fluid border m-0 p-0">
+			<span class="border"></span>
+			<div class="row">
+				<!-- Selected Image-->
+				<div class="col-6">
+					<img src="{{house.photos.[0]}}" class="img-fluid" alt="Selected_Image">
+				</div>
+				<!-- Images Grid -->
+				<div class="col-6 gap-3 justify-items-centered">
+					<!-- Row1 -->
+					<div class="row p-3 justify-items-centered">
+						<div class="col"><img src="{{house.photos.[0]}}" width="90px"></div>
+						<div class="col"><img src="{{house.photos.[1]}}" width="90px"></div>
+						<div class="col"><img src="{{house.photos.[2]}}" width="90px"></div>
+					</div>
+					<!-- Row2 -->
+					<div class="row p-3 justify-items-centered">
+						<div class="col"><img src="{{house.photos.[3]}}" width="90px"></div>
+						<div class="col"><img src="{{house.photos.[4]}}" width="90px"></div>
+						<div class="col"><img src="{{house.photos.[5]}}" width="90px"></div>
+					</div>
+					<!-- Row3 -->
+					<div class="row p-3 justify-items-centered">
+						<div class="col"><img src="{{house.photos.[6]}}" width="90px"></div>
+						<div class="col"><img src="{{house.photos.[7]}}" width="90px"></div>
+						<div class="col"><img src="{{house.photos.[8]}}" width="90px"></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- Description+BookingCard/Reviews Container -->
+		<div class="container-fluid border m-0 p-5">
+			<span class="border"></span>
+			<div class="col p-0">
+				<!-- Description+BookingCard Container -->
+				<div class="container-fluid p-0">
+					<div class="row">
+						<!-- Description -->
+						<div class="col-8 pl-3">
+							<div class=Container-fluid>
+									<h1>{{house.title}}</h1>
+									<i class="fas fa-map-marker-alt green"></i>
+									<small>{{house.location}} <strong>·</strong> {{house.rooms}} Rooms</small>
+									<!-- host avatar -->
+									<div class="host_avatar mt-lg-2">
+											<div class="avatar_img rounded-circle" style="background-image: url('https://randomuser.me/api/portraits/men/11.jpg');">
+											</div>
+											<div class="avatar_img m-lg-2">
+													<small>hosted by</small>
+													<p>
+														<img src="{{house.host.avatar}}" class="rounded-circle" height="20px" alt="avatar" >
+														{{house.host.name}}
+													</p>
+											</div>
+									</div>
+									<!-- description -->
+									<p>
+										{{house.description}}
+									</p>
+							</div>
+						</div>
+						<!-- BookingCard -->
+						<div class="col-4">
+							<div class="card">
+								<div class="card-body">
+									<h3>{{house.price}} $ / night</h3>
+									<small>0 Reviews</small>
+									<form>
+											<textarea class="form-control" aria-label="With textarea" placeholder="Send the host a message..." rows="5"></textarea>
+											<button class="btn btn-primary mt-2" type="submit">Request Booking</button>
+									</form>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- Reviews -->
+					<div class="container-fluid p-0">
+						<h2>0 Reviews</h2>
+						<form>
+								<small>Leave a review</small>
+								<textarea class="form-control" aria-label="With textarea" rows="6"></textarea>
+								<div class="votes">
+										<button class="btn btn-primary mt-2" type="submit"><i class="fas fa-thumbs-up green"></i></button>
+										<button class="btn btn-primary mt-2" type="submit"><i class="fas fa-thumbs-down red"></i></button>
+								</div>
+								<button class="btn btn-primary mt-2" type="submit">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>

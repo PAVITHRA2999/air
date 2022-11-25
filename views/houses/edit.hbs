@@ -1,0 +1,46 @@
+{{> nav}}
+<div class="container mb-xl-5">
+	<h1>Edit House</h1>
+	<form action="/houses/{{house._id}}?_method=patch" method="post">
+		<div class="container-xxl mb-3">
+			<label class="form-label mb-0">Short title</label>
+			<input type="text" class="form-control" required name="title" value="{{house.title}}">
+		</div>
+		<div class="container-xxl mb-3">
+			<label class="form-label mb-0">Description</label>
+			<textarea class="form-control" rows="6" required minlength="100" name="description" value="">{{house.description}}</textarea>
+		</div>
+		<div class="container-xxl mb-3">
+			<label class="form-label mb-0">Number of rooms</label>
+			<input type="number" class="form-control" required min="1" max="50" name="rooms" value="{{house.rooms}}" >
+		</div>
+		<div class="container-xxl mb-3">
+			<label class="form-label mb-0">Location</label>
+			<select class="form-select" aria-label="Default select example" name="location" selected="{{house.location}}">
+				<option>Koh Phangan </option>
+				<option>Koh Samui </option>
+				<option>Bali </option>
+			</select>
+		</div>
+		<div class="container-xxl mb-3">
+			<label class="form-label mb-0">Price (per night)</label>
+			<div class="input-group mb-3">
+				<span class="input-group-text">$</span>
+				<input type="number" class="form-control" required min="1" name="price" value="{{house.price}}">
+			</div>
+		</div>
+		<div class="container-xxl mb-3">
+			<label class="form-label mb-0">Add Photos (up to 9)</label>
+			{{#each house.photos as |photo|}}
+			<input type="url" class="form-control mb-1" placeholder="https://..." value="{{photo}}" name="photos">
+			{{/each}}
+		</div>
+		<div class="container-xxl mb-3">
+			<button class="btn btn-success">Save Changes</button>
+		</div>
+	</form>
+	<form class="container-xxl mb-3" action="/houses/create?_method=delete" method="post">
+		<button class="btn btn-success">Delete House</button>
+	</form>
+
+</div>
