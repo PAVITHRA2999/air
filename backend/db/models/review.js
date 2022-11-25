@@ -4,43 +4,60 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Review extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-      // ONE-TO-MANY (3x)
-      Review.belongsTo(models.User,           { foreignKey: 'userId',   onDelete: 'CASCADE' });
-      Review.belongsTo(models.Spot,           { foreignKey: 'spotId',   onDelete: 'CASCADE' });
-      Review.hasMany(models.ReviewImage,      { foreignKey: 'reviewId', onDelete: 'CASCADE' });
+      // define association here
+      Review.belongsTo(models.User, {
+        foreignKey: 'userId',
+      });
+      Review.belongsTo(models.Spot, {
+        foreignKey: 'spotId'
+      });
+      Review.hasMany(models.Image, {
+        foreignKey: 'reviewId',
+        onDelete: 'CASCADE',
+        hooks: true,
+      });
     }
   }
-
   Review.init({
     userId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
-
     spotId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
-
     review: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        len: [5, 256]
+        len: [4, 10000],
       }
     },
-
     stars: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
+      allowNull: false,
       validate: {
-        min: 1,
-        max: 5
+        isNumeric: true,
+        min: 0,
+        max: 5,
       }
     }
-
   }, {
-
     sequelize,
     modelName: 'Review',
+    indexes: [
+      {
+        unique: true,
+        fields: ['userId', 'spotId']
+      }
+    ],
   });
-
   return Review;
 };

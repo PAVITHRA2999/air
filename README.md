@@ -1,66 +1,43 @@
-# Treebnb
+# About Mybnb
 
-## Link to live site
-[Treebnb](https://air-bnb-project-kris.herokuapp.com/)
+MyBnb is a clone of Airbnb. It is a website that provides an online marketplace for lodging, primarily homestays for vacation rentals, and tourism activities.
 
-# Description
-* This is a fullstack clone application of the popular website Airbnb. The theme was treehouses, so Treebnb was the natural choice.
+[Click here to view Mybnb Live Site](https://airbnb-clone-jk.herokuapp.com/)
 
-* On this website, you can sign up as a new user, login, logout, while browsing beautiful treehouses from around the United States. You will also have the ability to create new spots and reviews!
+## Please see below links to project Wiki:
+[Feature List](https://github.com/JayWhyKay/airbnbjyk/wiki/Feature-List) \
+[Database Schema](https://github.com/JayWhyKay/airbnbjyk/wiki/Database-Schema) \
+[Frontend Routes](https://github.com/JayWhyKay/airbnbjyk/wiki/Frontend-Routes) \
+[API Routes](https://github.com/JayWhyKay/airbnbjyk/wiki/API-Routes) \
+[Redux Store StateShape](https://github.com/JayWhyKay/airbnbjyk/wiki/Mybnb-Redux-State)
 
-# Technologies Used:
-* JavaScript
-* HTML
-* CSS
-* React
-* Redux
-* Express
-* Node
-* PostgresSQL
-* Heroku
 
-# Splash Page
-![Splash Page Example](https://res.cloudinary.com/duvgdb8rd/image/upload/v1666620685/Screen_Shot_2022-10-24_at_6.41.54_AM_kog960.png)
+## Technologies Used:
 
-# Spot Details
-![Spot Details Example](https://res.cloudinary.com/duvgdb8rd/image/upload/v1666620668/Screen_Shot_2022-10-24_at_6.42.24_AM_tliny3.png)
+### Frontend
+- React
+- Redux
+- Javascript
+- HTML
+- CSS
 
-# Become a Host Modal
-![Spot Modal Example](https://res.cloudinary.com/duvgdb8rd/image/upload/v1666620921/Screen_Shot_2022-10-24_at_7.13.53_AM_efjwv8.png)
+### Backend
+- Sequelize
+- Express
+- Sqlite
+- PostgreSQL
 
-# Leave Review Modal
-![Review Modal Example](https://res.cloudinary.com/duvgdb8rd/image/upload/v1666620920/Screen_Shot_2022-10-24_at_7.14.10_AM_n8mipe.png)
+## Directions:
+To access full functionality of the app please follow the instructions below to login as a demo user.
 
-# Roadmap
+## Demo User Login:
 
-Mon 10/17
-* AuthMe
+You will be able to test the features without sign up by click on the "Demo User" button located in the Login modal. To bring up the Login modal click the login button located at the top right of the page. 
 
-Tues 10/18
-* GetSpots
-
-Wed 10/19 & Thu 10/20
-* Actions, Thunks, Reducers
-* Larger Seeder Sample
-* 1st Feature: Spots
-
-Fri 10/21
-* Refactor and create Modals
-* 2nd Feature: Reviews
-
-Sat 10/22
-* CSS All Day
-* Heroku
-
-Sun 10/23
-* CSS
-* validationErrors
-
-# Get Started
-1. Clone Repo : [treebnb github repo to clone](https://github.com/krispikris/k-bnb.git)
-2. install npm packages
-3. npm i
-
-# Connect with me
-* [LinkedIN](https://www.linkedin.com/in/kristopherhan/)
-* [GitHub](https://github.com/krispikris)
+<img width="1681" alt="Screen Shot 2022-08-01" src="https://github.com/JayWhyKay/airbnbjyk/blob/main/login.png">
+<img width="1681" alt="Screen Shot 2022-08-01" src="https://github.com/JayWhyKay/airbnbjyk/blob/main/mybnb-home.png">
+<img width="1681" alt="Screen Shot 2022-08-01" src="https://github.com/JayWhyKay/airbnbjyk/blob/main/mybnb-spotdetail.png">
+<img width="1681" alt="Screen Shot 2022-08-01" src="https://github.com/JayWhyKay/airbnbjyk/blob/main/mybnb-mylistings.png">
+<img width="1681" alt="Screen Shot 2022-08-01" src="https://github.com/JayWhyKay/airbnbjyk/blob/main/mybnb-myreviews.png">
+<img width="1681" alt="Screen Shot 2022-08-01" src="https://github.com/JayWhyKay/airbnbjyk/blob/main/mybnb-mybookings.png">
+<img width="1681" alt="Screen Shot 2022-08-01" src="https://github.com/JayWhyKay/airbnbjyk/blob/main/mybnb-bookingdetail.png">

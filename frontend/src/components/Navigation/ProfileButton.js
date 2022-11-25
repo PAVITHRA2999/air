@@ -1,12 +1,13 @@
-// frontend/src/components/Navigation/ProfileButton.js
-import    React, { useState, useEffect }    from 'react';
-import  { useDispatch }                     from 'react-redux';
-import    * as sessionActions               from '../../store/session';
-import                                           './ProfileButton.css'
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import * as sessionActions from "../../store/session";
+import "./ProfileButton.css";
 
 function ProfileButton({ user }) {
-  const   dispatch                  = useDispatch();
-  const [ showMenu, setShowMenu ]   = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [showMenu, setShowMenu] = useState(false);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -20,32 +21,74 @@ function ProfileButton({ user }) {
       setShowMenu(false);
     };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
   const logout = (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
+    dispatch(sessionActions.logout()).then(() => history.push("/"));
   };
 
   return (
     <>
-      <button className='dropdown-button' onClick={openMenu}>
-        <i className="fa-solid fa-bars"></i>
-        <i className="fas fa-user-circle" />
+      <button className="profile__button" onClick={openMenu}>
+        {/* <i className="fa-solid fa-bars"></i>
+                <i className="fas fa-user-circle" /> */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="hamburger"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="profile__icon"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+            clipRule="evenodd"
+          />
+        </svg>
       </button>
-
       {showMenu && (
-        <div className="profile-dropdown">
-          <div id='profile-dropdown-1'>Welcome back to Treebnb, {user.firstName}!</div>
-          {/* <div id='profile-dropdown-2'>Welcome back to Treebnb</div> */}
-          <div id='profile-dropdown-2'>{user.username}</div>
-          <div id='profile-dropdown-3'>{user.email}</div>
-          {/* YOOUR SPOTS? */}
-          <div id='profile-dropdown-4'>
-            <button id='profile-logout-button' onClick={logout}>Log Out</button>
+        <div className="profile__dropdown">
+          <div>{`${user.firstName} ${user.lastName}`}</div>
+          <div className="profile__email">{user.email}</div>
+          <div
+            className="profile__listings"
+            onClick={() => history.push(`/users/${user.id}/listings`)}
+          >
+            <button className="profile__link">My Listings</button>
+          </div>
+          <div
+            className="profile__listings"
+            onClick={() => history.push(`/users/${user.id}/reviews`)}
+          >
+            <button className="profile__link">My Reviews</button>
+          </div>
+          <div
+            className="profile__listings"
+            onClick={() => history.push(`/users/${user.id}/bookings`)}
+          >
+            <button className="profile__link">My Bookings</button>
+          </div>
+          <div>
+            <button className="log__out__button" onClick={logout}>
+              Log Out
+            </button>
           </div>
         </div>
       )}

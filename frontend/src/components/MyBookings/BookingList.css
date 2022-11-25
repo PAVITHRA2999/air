@@ -1,0 +1,46 @@
+.my_booking__container {
+  width: 450px;
+  height: 150px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border-radius: 15px;
+  box-shadow: 1px 1px 1px 1px rgba(120,120,120,0.4);
+  margin-bottom: 3px;
+  cursor: pointer;
+  padding-right: 2vw;
+}
+
+.my_booking__container:hover {
+  background-color: rgba(120,120,120,0.4);
+}
+
+.my_booking__container > img {
+  width: 45%;
+  height: 150px;
+  border-radius: 15px;
+}
+
+.my_booking__container > div {
+  padding-left: 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.my_booking__container > div > h4 {
+  font-weight: 500;
+  margin: 1vw 0px;
+}
+
+.my_booking__container > div > span {
+  margin-left: 1vw;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.my_booking__container > div > span:nth-child(2) {
+  font-weight: 500;
+}

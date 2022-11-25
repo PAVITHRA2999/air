@@ -1,230 +1,182 @@
 import { csrfFetch } from "./csrf";
 
-// CREATE | POST
-const CREATE_SPOT           = 'spots/createSpot';
-const CREATE_SPOT_IMAGE     = 'spots/createSpotImage';
+const GET_SPOTS = "spots/getAllSpots";
+const GET_ONE_SPOT = "spots/getOneSpot";
+const CREATE_SPOT = "spots/createSpot";
+const DELETE_SPOT = "spots/deleteSpot";
 
-// READ | GET
-const GET_SPOTS             = 'spots/getSpots';
-const GET_ONE_SPOT          = 'spots/getOneSpot';
-const GET_USER_SPOT         = 'spots/getUserSpot';
-
-// UPDATE | PUT
-const UPDATE_SPOT           = 'spots/updateSpot';
-
-// DELETE
-const DELETE_SPOT           = 'spots/deleteSpot';
-
-// ACTIONS | READ | GET
-const getAllSpotsAction = (payload) => {
-    return {
-        type: GET_SPOTS,
-        payload
-    };
+const getAllSpots = (payload) => {
+  return {
+    type: GET_SPOTS,
+    payload,
+  };
 };
 
-const getOneSpotAction = (payload) => {
-    return {
-        type: GET_ONE_SPOT,
-        payload
-    };
+const getOneSpot = (payload) => {
+  return {
+    type: GET_ONE_SPOT,
+    payload,
+  };
 };
 
-const getUserSpotAction = (payload) => {
-    return {
-        type: GET_USER_SPOT,
-        payload
-    };
+const createSpot = (payload) => {
+  return {
+    type: CREATE_SPOT,
+    payload,
+  };
 };
 
-// // ACTIONS | CREATE | POST
-// const createSpotAction = (payload) => {
-//     return {
-//         type: CREATE_SPOT,
-//         payload
-//     };
-// };
-
-const createSpotImageAction = (payload) => {
-    return {
-        type: CREATE_SPOT_IMAGE,
-        payload
-    };
+const deleteSpot = (id) => {
+  return {
+    type: DELETE_SPOT,
+    id,
+  };
 };
 
-// ACTIONS | UPDATE | PUT
-const updateSpotAction = (payload) => {
-    return {
-        type: UPDATE_SPOT,
-        payload
-    };
+export const loadSpots = () => async (dispatch) => {
+  const response = await csrfFetch("/api/spots");
+  const data = await response.json();
+  dispatch(getAllSpots(data.Spots));
+  return response;
 };
 
-// ACTIONS | DELETE
-const deleteSpotAction = (payload) => {
-    return {
-        type: DELETE_SPOT,
-        payload
-    };
+export const loadOneSpot = (id) => async (dispatch) => {
+  const response = await fetch(`/api/spots/${id}`);
+  if (response.ok) {
+    const data = await response.json();
+    // console.log('fetch from backend get1spot data----', data)
+    dispatch(getOneSpot(data));
+    return response;
+  }
 };
 
-
-// THUNK | READ | GET
-export const getAllSpotsThunk = () => async (dispatch) => {
-    const response = await fetch('/api/spots');
-
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(getAllSpotsAction(data))
-        return data;
-    };
+export const loadUserSpots = (id) => async (dispatch) => {
+  const response = await csrfFetch(`/api/users/${id}/spots`);
+  const data = await response.json();
+  dispatch(getAllSpots(data.Spots));
+  return response;
 };
 
-export const getOneSpotThunk = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}`);
+export const addSpot = (newSpot) => async (dispatch) => {
+  const {
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price,
+    previewImage,
+  } = newSpot;
+  // let formData = new FormData();
+  // formData.append("address", address);
+  // formData.append("city", city);
+  // formData.append("state", state);
+  // formData.append("country", country);
+  // formData.append("lat", lat);
+  // formData.append("lng", lng);
+  // formData.append("name", name);
+  // formData.append("description", description);
+  // formData.append("price", price);
+  // // formData.append("prevImg", prevImage);
+  // // formData.append("images", images);
+  // console.log(formData);
 
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(getOneSpotAction(data))
-        return data;
-    };
+  // if (images && images.length !== 0) {
+  //   for (let i = 0; i < images.length; i++) {
+  //     formData.append("images", images[i]);
+  //   }
+  // }
+  const response = await csrfFetch("/api/spots", {
+    method: "POST",
+    body: JSON.stringify({
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+      previewImage,
+    }),
+  });
+  const data = await response.json();
+  dispatch(createSpot(data));
+  return response;
 };
 
-export const getUserSpotThunk = () => async (dispatch) => {
-    const response = await csrfFetch('api/spots/current');
-
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(getUserSpotAction(data));
-        return data;
-    };
+export const editSpot = (spotId, spot) => async (dispatch) => {
+  const {
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price,
+    previewImage,
+  } = spot;
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+      previewImage,
+    }),
+  });
+  const data = await response.json();
+  dispatch(createSpot(data));
+  return response;
 };
 
-// THUNK | CREATE | POST
-export const createSpotThunk = (payload) => async (dispatch) => {
-    const response = await csrfFetch('/api/spots', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(payload)
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        // dispatch(createSpotAction(data))
-        dispatch(getOneSpotThunk(data.id))
-
-        return data
-    };
+export const removeSpot = (id) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${id}`, {
+    method: "DELETE",
+  });
+  dispatch(deleteSpot(id));
+  return response;
 };
 
-export const createSpotImageThunk = (payload, spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(payload)
-    });
+const initialState = {};
 
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(createSpotImageAction(data));
-        return data;
-    };
-};
-
-// THUNK | UPDATE | PUT
-export const updateSpotThunk = (payload, spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}`, {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(payload)
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(updateSpotAction(data));
-        return data;
-    };
-};
-
-// THUNK | DELETE
-export const deleteSpotThunk = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}`, {
-        method: 'DELETE'
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(deleteSpotAction(spotId))
-        return data;
-    };
-};
-
-// REDUCER
-let initialState = {};
 const spotsReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case GET_SPOTS: {
-            const newState = {...state};
-            action.payload.Spots.forEach(spot => {
-                newState[spot.id] = spot;
-            });
-            return newState;
-        }
-
-        case GET_ONE_SPOT: {
-            const newState = {...state};
-            newState[action.payload.id] = {...newState[action.payload.id], ...action.payload};
-            newState[action.payload.id] = action.payload;
-            return newState;
-        };
-
-
-        case CREATE_SPOT: {
-            const newState = {...state};
-            newState[action.payload.id] = action.payload;
-            // console.log('THIS IS THE NEWSTATE.PAYLOAD: ', newState.payload)
-            return newState;
-        };
-
-
-        case UPDATE_SPOT: {
-            const newState = {...state};
-            newState[action.payload.id] = {...newState[action.payload.id], ...action.payload};
-            return newState;
-        }
-
-
-        case DELETE_SPOT:{
-            const newState = {...state};
-            delete newState[action.payload];      // payload is the spotId because we don't need data from deleteTHUNK(line 160)
-            return newState;
-        }
-
-
-        default:
-            return state;
-        };
-    };
+  let newState;
+  switch (action.type) {
+    case GET_SPOTS:
+      newState = Object.assign({}, state);
+      action.payload.map((spot) => (newState[spot.id] = spot));
+      return newState;
+    case GET_ONE_SPOT:
+      // newState = Object.assign({}, state);
+      // newState[action.payload.id] = action.payload;
+      // return newState;
+      newState = { ...state };
+      newState[action.payload.id] = action.payload;
+      return newState;
+    case CREATE_SPOT:
+      newState = Object.assign({}, state);
+      newState[action.payload.id] = action.payload;
+      return newState;
+    case DELETE_SPOT:
+      newState = Object.assign({}, state);
+      delete newState[action.id];
+      return newState;
+    default:
+      return state;
+  }
+};
 
 export default spotsReducer;
-
-    // const newState = Object.assign({}, state);
-
-    // ORDER: THUNK, ACTION, REDUCER
-    // THUNK: PULLS INFORMATION
-    // ACTION: STORE THAT DATA IN THE PAYLOAD
-    // TYPE: WHAT IS HAPPENING WITH THE PAYLOAD (BANANA-BLE)
-    // REDUCER: CREATES A COPY OF THE STATE TO REPLACE THE DEFAULT OR OLD STATE (SIMILAR TO MIDDLEWARE)
-
-    // newState.action.spot;
-    // newState = {
-        //     singleSpot: {
-            //         [action.spot.id] : newSpot
-            //     }
-            // }
-
-            // case CREATE_SPOT_IMAGE: {
-            //     // newState = {...state};
-            //     newState.singleSpot.SpotImages = [action.spotId.previewImage]
-            //     return {...newState}
-            // }

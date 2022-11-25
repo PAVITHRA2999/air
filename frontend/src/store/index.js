@@ -1,13 +1,17 @@
-import  { createStore, combineReducers, applyMiddleware, compose }   from 'redux';
-import    thunk                                                      from 'redux-thunk';
-import    sessionReducer                                             from './session';
-import    spotsReducer                                               from './spots';
-import    reviewsReducer                                             from './reviews';
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import bookingReducer from "./bookings";
+import imageReducer from "./images";
+import reviewsReducer from "./reviews";
+import sessionReducer from "./session";
+import spotsReducer from "./spots";
 
 const rootReducer = combineReducers({
-  session:  sessionReducer,          // BIG OBJECTS THAT CONTAIN A BUNCH OF DATA/INFO
-  spots:    spotsReducer,
-  reviews:  reviewsReducer
+  session: sessionReducer,
+  spots: spotsReducer,
+  reviews: reviewsReducer,
+  images: imageReducer,
+  bookings: bookingReducer,
 });
 
 let enhancer;

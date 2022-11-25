@@ -1,0 +1,17 @@
+.bookings__reviews{
+  align-items: center;
+  justify-content: center;
+  margin-right: 1vw;
+}
+
+.fa-solid.fa-star {
+  font-size: 12px;
+  margin-right: 3px;
+  color: #222222;
+  /* margin-top: 4px; */
+}
+
+.avg__rating {
+  font-size: 15px;
+  color: #222222;
+}

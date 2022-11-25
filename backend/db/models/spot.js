@@ -4,121 +4,107 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-      // ONE-TO-MANY (4x)
-      Spot.belongsTo(models.User,       { foreignKey: 'ownerId', as: 'Owner'});
-      Spot.hasMany(models.SpotImage,    { foreignKey: 'spotId' });
-      Spot.hasMany(models.Review,       { foreignKey: 'spotId' });
-      Spot.hasMany(models.Booking,      { foreignKey: 'spotId' });
-
+      // define association here
+      Spot.belongsTo(models.User, {
+        as: 'Owner',
+        foreignKey: 'ownerId',
+      });
+      Spot.hasMany(models.Review, {
+        foreignKey: 'spotId',
+        onDelete: 'CASCADE',
+        hooks: true,
+      });
+      Spot.hasMany(models.Image, {
+        foreignKey: 'spotId',
+        onDelete: 'CASCADE',
+        hooks: true,
+      });
+      Spot.hasMany(models.Booking, {
+        foreignKey: 'spotId',
+        onDelete: 'CASCADE',
+        hooks: true,
+      })
     }
   }
-
   Spot.init({
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
-    },
-
     ownerId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
-
     address: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [1, 30]
-      }
     },
-
     city: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: false,
       validate: {
-        len: [1, 30]
+        len: [2, 20]
       }
     },
-
     state: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(15),
       allowNull: false,
       validate: {
-        len: [1, 30]
+        len: [2, 15]
       }
     },
-
     country: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(30),
       allowNull: false,
-      validate: {
-        len: [1, 30]
-      }
     },
-
     lat: {
-      type: DataTypes.DECIMAL,
-      allowNull: true
-    },
-
-    lng: {
-      type: DataTypes.DECIMAL,
-      allowNull: true
-    },
-
-    name: {
-      type: DataTypes.STRING,
+      type: DataTypes.DECIMAL(11, 7),
       allowNull: false,
       validate: {
-        len: [1, 30]
+        min: -90,
+        max: 90,
       }
     },
-
+    lng: {
+      type: DataTypes.DECIMAL(11, 7),
+      allowNull: false,
+      validate: {
+        min: -180,
+        max: 180
+      }
+    },
+    name: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1, 256]
-      }
     },
-
     price: {
-      type: DataTypes.DECIMAL,
-      allowNull: false
-    }
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+    },
+    previewImage: {
+      type: DataTypes.STRING,
+    },
   }, {
-
     sequelize,
     modelName: 'Spot',
+    indexes: [
+      {
+        unique: true,
+        fields: ['lat', 'lng']
+      }
+    ],
+    scopes: {
+      noPreviewImage: {
+        attributes: {
+          exclude: ['previewImage']
+        }
+      }
+    },
   });
-
   return Spot;
 };
-
-// MANY-TO-MANY (2x)
-// Spot.belongsToMany(models.User,   { through:    models.Review,
-//                                     foreignKey: 'spotId',
-//                                     otherKey:   'userId' });
-
-// Spot.belongsToMany(models.User,   { through:    models.Booking,
-//                                     foreignKey: 'spotId',
-//                                     otherKey:   'userId',
-//                                     onDelete:   'CASCADE' });
-
-//  static async createSpot ({ address, city, state, country, lat, lng, name, description, price }) {
-//   const spot = await Spot.create({
-//     address,
-//     city,
-//     state,
-//     country,
-//     lat,
-//     lng,
-//     name,
-//     description,
-//     price
-//   });
-//   return await Spot.findByPk(spot.id)
-//  }
-// }

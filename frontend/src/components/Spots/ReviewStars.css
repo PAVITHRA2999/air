@@ -1,0 +1,12 @@
+.fa-solid.fa-star {
+  font-size: 12px;
+  margin-right: 3px;
+  color: #222222;
+  /* margin-top: 4px; */
+}
+
+.avg-rating {
+  font-size: 15px;
+  color: #222222;
+  font-family: "Poppins", sans-serif;
+}

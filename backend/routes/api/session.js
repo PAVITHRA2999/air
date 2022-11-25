@@ -1,109 +1,58 @@
-// backend/routes/api/session.js
 const express = require('express');
-const router = express.Router();
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth.js');
 const { User } = require('../../db/models');
-const usersRouter = require('./users.js');
 
 const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation.js');
+const { handleValidationErrors } = require('../../utils/validation');
 
-router.use('./users', usersRouter);
+const router = express.Router();
 
 const validateLogin = [
-  check('credential')
-    .exists({ checkFalsy: true })
-    .notEmpty()
-    .withMessage('Please provide a valid email or username.'),
-  check('password')
-    .exists({ checkFalsy: true })
-    .withMessage('Please provide a password.'),
-  handleValidationErrors
+    check('email')
+        .notEmpty()
+        .withMessage('Email is required'),
+    check('password')
+        .exists({ checkFalsy: true })
+        .withMessage('Password is required'),
+    handleValidationErrors
 ];
 
-// Log in
 router.post('/', validateLogin, async (req, res, next) => {
-      const { credential, password } = req.body;
+    const { email, password } = req.body;
+    const user = await User.login({ email, password });
 
-      const user = await User.login({ credential, password });
+    if (!user) {
+        const err = new Error('Invalid credentials');
+        err.status = 401;
+        err.title = 'Invalid credentials';
+        err.errors = ['Invalid credentials'];
+        return next(err);
+    };
 
-      console.log('THIS IS THE USER: ', user);
+    const token = await setTokenCookie(res, user);
 
-      if (!user) {
-        res.status(401);
-        return res.json({
-            message: 'Invalid credentials',
-            statusCode: 401
-        });
+    const currentUser = {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        token,
+    };
 
-        // const err = new Error('Login failed');
-        // err.status = 401;
-        // err.title = 'Login failed';
-        // err.errors = ['The provided credentials were invalid.'];
-        // return next(err);
-      }
+    return res.json(currentUser);
+});
 
-      let token = await setTokenCookie(res, user);
-      let resUser = user.toJSON();
-      resUser.token = token;
-      return res.json(resUser);
-    }
-  );
-
-// Log out
 router.delete('/', (_req, res) => {
     res.clearCookie('token');
     return res.json({ message: 'success' });
-  }
-);
+});
 
-// Restore session user
-router.get('/', restoreUser, (req, res) => {
+router.get('/', restoreUser, requireAuth, (req, res) => {
     const { user } = req;
     if (user) {
-      return res.json(user.toSafeObject());
-    } else return res.json(null);
-  }
-);
-
-// FIND router.get (GET CURRENT USER)
-
-// PHASE 4: use to test in browser's DevTools.
-// fetch('/api/session', {
-//     method: 'POST',
-//     headers: {
-//       "Content-Type": "application/json",
-//       "XSRF-TOKEN": `beQSSOBH-ymS8vX_wNz1KVQFRJgKdcUNFMI0`
-//     },
-//     body: JSON.stringify({ credential: 'Demo-lition', password: 'password' })
-//   }).then(res => res.json()).then(data => console.log(data));
-
-// fetch('/api/session', {
-//     method: 'POST',
-//     headers: {
-//       "Content-Type": "application/json",
-//       "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`
-//     },
-//     body: JSON.stringify({ credential: 'demo@user.io', password: 'password' })
-//   }).then(res => res.json()).then(data => console.log(data));
-
-
-// fetch('/api/session', {
-//     method: 'POST',
-//     headers: {
-//       "Content-Type": "application/json",
-//       "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`
-//     },
-//     body: JSON.stringify({ credential: 'Demo-lition', password: 'Hello World!' })
-//   }).then(res => res.json()).then(data => console.log(data));
-
-// fetch('/api/session', {
-//   method: 'DELETE',
-//   headers: {
-//     "Content-Type": "application/json",
-//     "XSRF-TOKEN": `GnLE4hDs-QmbDtP1T8bpWffb-eTMDBLUpD-M`
-//   }
-// }).then(res => res.json()).then(data => console.log(data));
+        return res.json(user.toSafeObject());
+    } else return res.json({});
+});
 
 module.exports = router;
